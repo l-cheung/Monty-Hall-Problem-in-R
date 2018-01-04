@@ -1,3 +1,6 @@
+# Load the package ggplot2, if it is not already loaded
+require(ggplot2)
+
 # Monty Hall Function - Lilian Cheung
 # This function simulates n runs of the Monty Hall problem and graphs the results
 # You can choose n and whether your strategy is to switch doors (switch=TRUE) or not (switch=FALSE)
