@@ -1,12 +1,13 @@
-# Load the package ggplot2, if it is not already loaded
-require(ggplot2)
-
+# --------------------------------------------------------
 # Monty Hall Function - Lilian Cheung
+# --------------------------------------------------------
 # This function simulates n runs of the Monty Hall problem and graphs the results
 # You can choose n and whether your strategy is to switch doors (switch=TRUE) or not (switch=FALSE)
 # Copy and paste this function into R to define it
+test <- FALSE 
 
-Monty <- function(n=1000, switch=TRUE) {
+Monty <- function( n = 1000, 
+                   switch = TRUE ) {
 
 # Initialize the win vector, where we'll store wins
 win <- rep(NA, n)
@@ -53,22 +54,37 @@ badprizes <- c("Goat1", "Goat2")
     } else {win[i] <- 0}
   }
 
+  n_wins <- sum( win )
+  n_losses <- n - sum( win )
 
-# Print & graph the results of simulation
-  data <- data.frame(result=c("loss","win"), relativefrequency=c(table(win))/n)
-  print(data)
-  ggplot(data, aes(x=result, y=relativefrequency)) + geom_bar(stat = "identity")
+
+  # Print & graph the results of simulation
+  data <- data.frame( Result = c("loss","win"), 
+                      Count = c( n_losses, n_wins ),
+                      Proportion = c( n_losses/n, n_wins/n ),
+                      stringsAsFactors = FALSE ) 
+  plot <- ggplot( data, 
+                  aes( x = Result, 
+                       y = Proportion ) ) + 
+          geom_bar( stat = "identity" )
+  
+  list( data = data, 
+        plot = plot )
 }
 
 
-
+if( test == TRUE ) {
 
 ### Using the Monty function
 
-set.seed(123)
+# set.seed(123)
 
 # Strategy: You stick with your original door choice
-Monty(n=100000, switch=FALSE)
+Monty( n = 100000, 
+       switch = FALSE )
 
 # Strategy: You stick with your original door choice
-Monty(n=100000, switch=TRUE)
+Monty( n = 100000, 
+       switch = TRUE )
+
+}
